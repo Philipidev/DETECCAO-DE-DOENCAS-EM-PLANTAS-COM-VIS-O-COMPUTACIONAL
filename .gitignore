@@ -30,3 +30,5 @@ venv/
 
 # Ignorar arquivos ZIP baixados (opcional, caso você queira evitar salvar no repositório)
 data/raw/*.zip
+
+*.h5

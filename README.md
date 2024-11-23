@@ -1,48 +1,77 @@
-# Projeto de Detecção de Doenças em Plantas
+# Detecção de Doenças em Plantas com Visão Computacional
 
-Este projeto tem como objetivo desenvolver um modelo de aprendizado de máquina para detectar e classificar doenças em plantas utilizando imagens. A solução utiliza redes neurais convolucionais (CNNs) e o dataset **New Plant Diseases Dataset** disponível no Kaggle.
-
----
-
-## **Estrutura do Projeto**
-
-O projeto está organizado nas seguintes pastas:
-
-```
-meu_projeto/
-├── data/
-│   ├── raw/             # Contém os dados brutos (baixados do Kaggle)
-│   ├── processed/       # Contém os dados pré-processados
-├── notebooks/           # Notebooks Jupyter para exploração e prototipagem
-├── src/
-│   ├── data/            # Scripts para carregamento e pré-processamento dos dados
-│   ├── models/          # Scripts para definição e treinamento dos modelos
-│   ├── utils/           # Scripts utilitários
-│   ├── visualization/   # Scripts para gerar visualizações
-├── models/              # Modelos treinados e checkpoints
-├── reports/             # Relatórios e resultados gerados
-│   ├── figures/         # Gráficos e imagens geradas
-├── download_and_unzip.py # Script para baixar e descompactar os dados do Kaggle
-├── README.md            # Documentação do projeto
-├── requirements.txt     # Dependências do projeto
-└── .gitignore           # Arquivo para ignorar arquivos/pastas desnecessários no Git
-```
+Este repositório contém um projeto de detecção de doenças em plantas utilizando redes neurais convolucionais (CNNs) e o dataset de doenças em plantas disponível no Kaggle. O objetivo é treinar e avaliar modelos para classificar imagens de plantas em saudáveis ou com doenças específicas.
 
 ---
 
-## **Como Iniciar o Projeto**
+## Estrutura do Projeto
 
-Siga os passos abaixo para configurar e executar o projeto:
+A organização do projeto está dividida em várias pastas e arquivos para facilitar a manipulação de dados, treinamento de modelos e análise dos resultados.
 
-### **1. Instale o Python**
+### Diretórios Principais
 
-Certifique-se de que o Python **3.6+** está instalado. Você pode baixá-lo [aqui](https://www.python.org/downloads/).
+1. **`data/`**  
+   - Pasta destinada aos dados brutos e processados. **Esta pasta está ignorada no Git (`.gitignore`) devido ao seu grande tamanho.**
+   - Estrutura:
+     ```
+     data/
+     ├── raw/
+     │   ├── new-plant-diseases-dataset/
+     │   │   ├── New Plant Diseases Dataset(Augmented)/
+     │   │   │   ├── train/  # Dados de treino organizados por classes
+     │   │   │   ├── valid/  # Dados de validação organizados por classes
+     │   │   ├── test/       # Dados de teste com imagens soltas
+     ├── processed/          # Dados pré-processados (em desenvolvimento)
+     ```
+   - **`raw/new-plant-diseases-dataset/train/`**: Contém imagens organizadas em subpastas, onde cada subpasta corresponde a uma classe (exemplo: `Corn_(maize)___healthy`, `Tomato___Early_blight`).
+   - **`raw/new-plant-diseases-dataset/test/`**: Imagens soltas para validação posterior do modelo.
+
+2. **`models/`**  
+   - Diretório para armazenar os modelos treinados e gráficos gerados.
+   - Estrutura:
+     ```
+     models/
+     ├── model_Adam_relu_20241123_173845/
+     │   ├── accuracy_by_class.png
+     │   ├── accuracy.png
+     │   ├── confusion_matrix.png
+     │   ├── loss.png
+     │   ├── model_architecture.png
+     │   ├── plant_disease_model_20241123_174332.h5
+     ├── PlantNet-Conv3-Dense128-ReLU-RMSprop_20241123_180649/
+     │   ├── accuracy_by_class.png
+     │   ├── accuracy.png
+     │   ├── confusion_matrix.png
+     │   ├── loss.png
+     │   ├── model_architecture.png
+     │   ├── plant_disease_model_20241123_180928.h5
+     ```
+   - Cada subpasta contém:
+     - **Modelos treinados** (`*.h5`).
+     - **Gráficos de performance**:
+       - `accuracy.png`, `loss.png`: Acurácia e perda ao longo das épocas.
+       - `confusion_matrix.png`: Matriz de confusão.
+       - `accuracy_by_class.png`: Acurácia por classe.
+       - `precision_recall_f1.png`: Precisão, recall e F1-Score por classe.
+       - `predicoes_corretas.png` e `predicoes_erradas.png`: Exemplos de predições corretas e incorretas.
+     - **Arquitetura do modelo** (`model_architecture.png`).
+
+3. **`notebooks/`**  
+   - Contém notebooks interativos usados para explorar os dados, treinar os modelos e gerar os gráficos.
+   - Arquivos principais:
+     - `gerar_plot_model.ipynb`: Gera os gráficos da arquitetura do modelo.
+     - `treinar_extrair_dados.ipynb`: Treina o modelo e salva os resultados.
+
+4. **Arquivos Raiz**
+   - **`requirements.txt`**: Lista de dependências para reproduzir o ambiente do projeto.
+   - **`README.md`**: Documentação principal do projeto.
+   - **`download_and_unzip.py`**: Script para baixar e descompactar os dados do Kaggle.
 
 ---
 
-### **2. Instale as Bibliotecas Necessárias**
+## Dependências
 
-Instale as dependências do projeto com o seguinte comando:
+As dependências necessárias para executar o projeto estão listadas no arquivo `requirements.txt`. Instale-as com o comando:
 
 ```bash
 pip install -r requirements.txt
@@ -50,96 +79,62 @@ pip install -r requirements.txt
 
 ---
 
-### **3. Configure a API do Kaggle**
+## Como Configurar o Projeto
 
-Para baixar os dados diretamente do Kaggle:
+1. **Clone o Repositório**
+   ```bash
+   git clone https://github.com/seu-repositorio.git
+   cd PAI-Detecao-de-doencas-em-plantas-com-visao-computacional
+   ```
 
-1. Faça login na sua conta do Kaggle.
-2. Acesse [My Account](https://www.kaggle.com/account).
-3. Na seção **API**, clique em **Create New API Token**.
-4. Um arquivo chamado `kaggle.json` será baixado.
-5. Mova o arquivo `kaggle.json` para o local apropriado:
-   - **Windows**: `%USERPROFILE%\.kaggle\`
-   - **Linux/Mac**: `/home/<seu-usuário>/.kaggle/`
-6. Certifique-se de que o arquivo possui as permissões corretas:
-   - **Linux/Mac**:
+2. **Baixar e Preparar os Dados**
+   - Certifique-se de ter acesso ao dataset do [Kaggle](https://www.kaggle.com/datasets/vipoooool/new-plant-diseases-dataset).
+   - Use o script `download_and_unzip.py` para baixar e descompactar os dados:
      ```bash
-     chmod 600 ~/.kaggle/kaggle.json
+     python download_and_unzip.py
      ```
 
----
+3. **Organizar os Dados**
+   - Os dados serão salvos na pasta `data/raw/new-plant-diseases-dataset/`. Certifique-se de que a estrutura esteja correta antes de executar os notebooks.
 
-### **4. Baixe e Prepare os Dados**
-
-Execute o script para baixar e descompactar os dados:
-
-```bash
-python download_and_unzip.py
-```
-
-O script irá:
-- Baixar o dataset do Kaggle.
-- Salvar o arquivo ZIP na pasta `data/raw/`.
-- Descompactar os dados na pasta `data/raw/`.
+4. **Executar os Notebooks**
+   - Abra os notebooks no Jupyter Notebook ou no VSCode.
+   - Execute os blocos de código para treinar os modelos e gerar os gráficos.
 
 ---
 
-### **5. Explore os Notebooks**
+## Resultados Salvos
 
-Use os notebooks na pasta `notebooks/` para explorar os dados e testar os modelos. Para iniciar o Jupyter Notebook, execute:
+Os resultados do treinamento (modelos e gráficos) são salvos automaticamente em subpastas do diretório `models/`. Cada subpasta corresponde a um modelo específico, com detalhes sobre:
 
-```bash
-jupyter notebook
-```
-
----
-
-### **6. Treine o Modelo**
-
-Após os dados estarem pré-processados e prontos:
-- Use os scripts na pasta `src/` para definir, treinar e avaliar o modelo.
+- Desempenho (gráficos de perda, acurácia e matriz de confusão).
+- Arquitetura do modelo.
+- Modelos treinados (`*.h5`) para reutilização.
 
 ---
 
-## **Dependências**
+## Estrutura de Gráficos
 
-O projeto utiliza as seguintes bibliotecas Python:
+### Exemplos de Gráficos Gerados:
 
-- `tensorflow`
-- `numpy`
-- `pandas`
-- `matplotlib`
-- `seaborn`
-- `scikit-learn`
-- `opencv-python`
-- `jupyter`
-- `kaggle`
+1. **Acurácia e Perda**
+   - Mostra o desempenho do modelo ao longo das épocas.
 
-Todas as dependências estão listadas no arquivo `requirements.txt`.
+2. **Matriz de Confusão**
+   - Avalia a performance de classificação entre classes.
 
----
+3. **Acurácia por Classe**
+   - Permite verificar em quais classes o modelo tem melhor desempenho.
 
-## **Próximos Passos**
+4. **Predições**
+   - Exemplos de imagens corretamente e incorretamente classificadas.
 
-- Implementar técnicas avançadas de aumento de dados (data augmentation).
-- Otimizar a arquitetura do modelo para melhor desempenho.
-- Implantar o modelo como uma API web para uso prático.
+5. **Relatório de Métricas**
+   - Gráfico de precisão, recall e F1-Score por classe.
 
 ---
 
-## **Contribuições**
+## Observações
 
-Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou enviar pull requests.
-
----
-
-## **Licença**
-
-Este projeto está licenciado sob a licença MIT.
-
----
-
-## **Contato**
-
-- **Autor**: Philipi Gariglio
-- **E-mail**: philipigariglio@gmail.com
+- **Armazenamento de Dados**: A pasta `data/` está no `.gitignore` e não será versionada.
+- **Personalização**: Ajuste os hiperparâmetros no notebook `treinar_extrair_dados.ipynb` para explorar diferentes arquiteturas e otimizadores.
