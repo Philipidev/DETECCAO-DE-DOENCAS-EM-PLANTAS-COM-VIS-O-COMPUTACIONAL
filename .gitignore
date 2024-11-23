@@ -1,0 +1,32 @@
+# Ignorar a pasta de dados brutos e processados
+data/raw/
+data/processed/
+
+# Ignorar modelos treinados e checkpoints
+models/
+
+# Ignorar arquivos do sistema
+__pycache__/
+*.pyc
+*.pyo
+*.DS_Store
+Thumbs.db
+
+# Ignorar logs e checkpoints
+logs/
+*.log
+*.ckpt
+
+# Ignorar ambientes virtuais, caso use algum no futuro
+venv/
+.env/
+
+# Ignorar configurações de IDEs
+.vscode/
+.idea/
+
+# Ignorar dependências específicas do Kaggle
+.kaggle/
+
+# Ignorar arquivos ZIP baixados (opcional, caso você queira evitar salvar no repositório)
+data/raw/*.zip
