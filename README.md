@@ -115,5 +115,4 @@ Os modelos treinados são salvos como arquivos `.h5` e podem ser reutilizados pa
 
 ## Observações
 
-- **Armazenamento de Dados**: A pasta `data/` é ignorada no controle de versão para evitar problemas com arquivos grandes.
-- **Contribuições**: Caso queira contribuir, sinta-se à vontade para enviar pull requests ou reportar problemas.
+- **Armazenamento de Dados**: A pasta `data/` e os arquivos `*.h5` é ignorada no controle de versão para evitar problemas com arquivos grandes.
