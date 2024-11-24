@@ -12,3 +12,4 @@ kaggle>=1.5.12
 tqdm>=4.60.0
 pydot>=1.4.2
 graphviz>=0.19.1
+cvlib>=0.2.6
