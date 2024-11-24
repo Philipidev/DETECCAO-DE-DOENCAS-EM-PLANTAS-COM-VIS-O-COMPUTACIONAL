@@ -1,140 +1,119 @@
 # Detecção de Doenças em Plantas com Visão Computacional
 
-Este repositório contém um projeto de detecção de doenças em plantas utilizando redes neurais convolucionais (CNNs) e o dataset de doenças em plantas disponível no Kaggle. O objetivo é treinar e avaliar modelos para classificar imagens de plantas em saudáveis ou com doenças específicas.
+Este repositório contém um projeto que utiliza redes neurais convolucionais (CNNs) para a detecção e classificação de doenças em plantas. O objetivo é identificar automaticamente se uma planta está saudável ou apresentar uma doença específica, com base em imagens de folhas.
 
 ---
 
 ## Estrutura do Projeto
 
-A organização do projeto está dividida em várias pastas e arquivos para facilitar a manipulação de dados, treinamento de modelos e análise dos resultados.
+A organização do projeto segue uma estrutura modular, separando dados, modelos, resultados e scripts para facilitar o desenvolvimento e a análise.
 
 ### Diretórios Principais
 
 1. **`data/`**  
-   - Pasta destinada aos dados brutos e processados. **Esta pasta está ignorada no Git (`.gitignore`) devido ao seu grande tamanho.**
+   - Contém os dados brutos e processados. Esta pasta está ignorada pelo Git (`.gitignore`) devido ao seu grande tamanho.
    - Estrutura:
-     ```
+     ```plaintext
      data/
      ├── raw/
      │   ├── new-plant-diseases-dataset/
      │   │   ├── New Plant Diseases Dataset(Augmented)/
-     │   │   │   ├── train/  # Dados de treino organizados por classes
-     │   │   │   ├── valid/  # Dados de validação organizados por classes
-     │   │   ├── test/       # Dados de teste com imagens soltas
-     ├── processed/          # Dados pré-processados (em desenvolvimento)
+     │   │   │   ├── train/  # Imagens organizadas por classes para treinamento
+     │   │   │   ├── valid/  # Imagens organizadas por classes para validação
+     │   │   ├── test/       # Imagens soltas para teste final
      ```
-   - **`raw/new-plant-diseases-dataset/train/`**: Contém imagens organizadas em subpastas, onde cada subpasta corresponde a uma classe (exemplo: `Corn_(maize)___healthy`, `Tomato___Early_blight`).
-   - **`raw/new-plant-diseases-dataset/test/`**: Imagens soltas para validação posterior do modelo.
 
 2. **`models/`**  
-   - Diretório para armazenar os modelos treinados e gráficos gerados.
+   - Diretório onde são salvos os modelos treinados, gráficos de desempenho e arquitetura.
    - Estrutura:
-     ```
+     ```plaintext
      models/
      ├── model_Adam_relu_20241123_173845/
-     │   ├── accuracy_by_class.png
-     │   ├── accuracy.png
-     │   ├── confusion_matrix.png
-     │   ├── loss.png
-     │   ├── model_architecture.png
-     │   ├── plant_disease_model_20241123_174332.h5
+     │   ├── {ARQUIVOS RESULTANTES DO MODELO}
      ├── PlantNet-Conv3-Dense128-ReLU-RMSprop_20241123_180649/
-     │   ├── accuracy_by_class.png
-     │   ├── accuracy.png
-     │   ├── confusion_matrix.png
-     │   ├── loss.png
-     │   ├── model_architecture.png
-     │   ├── plant_disease_model_20241123_180928.h5
+     ├── PlantNet-DeepConv512-Robust_20241124_172312/
      ```
-   - Cada subpasta contém:
-     - **Modelos treinados** (`*.h5`).
-     - **Gráficos de performance**:
-       - `accuracy.png`, `loss.png`: Acurácia e perda ao longo das épocas.
-       - `confusion_matrix.png`: Matriz de confusão.
-       - `accuracy_by_class.png`: Acurácia por classe.
-       - `precision_recall_f1.png`: Precisão, recall e F1-Score por classe.
-       - `predicoes_corretas.png` e `predicoes_erradas.png`: Exemplos de predições corretas e incorretas.
-     - **Arquitetura do modelo** (`model_architecture.png`).
 
 3. **`notebooks/`**  
-   - Contém notebooks interativos usados para explorar os dados, treinar os modelos e gerar os gráficos.
+   - Contém os notebooks utilizados para treinamento, teste e análise.
    - Arquivos principais:
-     - `gerar_plot_model.ipynb`: Gera os gráficos da arquitetura do modelo.
-     - `treinar_extrair_dados.ipynb`: Treina o modelo e salva os resultados.
+     - `gerar_plot_model.ipynb`: Gera a visualização da arquitetura do modelo.
+     - `treinar_extrair_dados.ipynb`: Executa o treinamento e extrai dados para análise.
+     - `testar_modelo.ipynb`: Testa modelos treinados em imagens novas.
 
-4. **Arquivos Raiz**
-   - **`requirements.txt`**: Lista de dependências para reproduzir o ambiente do projeto.
-   - **`README.md`**: Documentação principal do projeto.
-   - **`download_and_unzip.py`**: Script para baixar e descompactar os dados do Kaggle.
+4. **`testes/`**  
+   - Contém os resultados dos testes realizados com diferentes modelos.
+   - Estrutura:
+     ```plaintext
+     testes/
+     ├── model_Adam_relu_20241123_173845/
+     ├── PlantNet-Conv3-Dense128-ReLU-RMSprop_20241123_180649/
+     ├── PlantNet-DeepConv512-Robust_20241124_172312/
+     ```
+
+5. **Arquivos Raiz**
+   - **`requirements.txt`**: Lista de bibliotecas e dependências.
+   - **`download_and_unzip.py`**: Script para baixar e descompactar os dados.
+   - **`.gitignore`**: Exclui arquivos grandes ou desnecessários do controle de versão.
 
 ---
 
-## Dependências
-
-As dependências necessárias para executar o projeto estão listadas no arquivo `requirements.txt`. Instale-as com o comando:
-
-```bash
-pip install -r requirements.txt
-```
-
----
-
-## Como Configurar o Projeto
+## Configuração do Ambiente
 
 1. **Clone o Repositório**
    ```bash
-   git clone https://github.com/seu-repositorio.git
+   git clone https://github.com/Philipidev/PAI-Detecao-de-doencas-em-plantas-com-visao-computacional.git
+
    cd PAI-Detecao-de-doencas-em-plantas-com-visao-computacional
    ```
 
-2. **Baixar e Preparar os Dados**
-   - Certifique-se de ter acesso ao dataset do [Kaggle](https://www.kaggle.com/datasets/vipoooool/new-plant-diseases-dataset).
-   - Use o script `download_and_unzip.py` para baixar e descompactar os dados:
-     ```bash
-     python download_and_unzip.py
-     ```
+2. **Instale as Dependências**
+   Use o arquivo `requirements.txt` para configurar o ambiente:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-3. **Organizar os Dados**
-   - Os dados serão salvos na pasta `data/raw/new-plant-diseases-dataset/`. Certifique-se de que a estrutura esteja correta antes de executar os notebooks.
+3. **Baixe e Prepare os Dados**
+   Certifique-se de que o dataset [New Plant Diseases Dataset (Kaggle)](https://www.kaggle.com/datasets/vipoooool/new-plant-diseases-dataset) esteja disponível. Utilize o script abaixo para automatizar o download:
+   ```bash
+   python download_and_unzip.py
+   ```
 
-4. **Executar os Notebooks**
-   - Abra os notebooks no Jupyter Notebook ou no VSCode.
-   - Execute os blocos de código para treinar os modelos e gerar os gráficos.
-
----
-
-## Resultados Salvos
-
-Os resultados do treinamento (modelos e gráficos) são salvos automaticamente em subpastas do diretório `models/`. Cada subpasta corresponde a um modelo específico, com detalhes sobre:
-
-- Desempenho (gráficos de perda, acurácia e matriz de confusão).
-- Arquitetura do modelo.
-- Modelos treinados (`*.h5`) para reutilização.
+4. **Execute os Notebooks**
+   Inicie o treinamento ou teste do modelo utilizando os notebooks na pasta `notebooks/`.
 
 ---
 
-## Estrutura de Gráficos
+## Resultados
 
-### Exemplos de Gráficos Gerados:
+### Gráficos e Avaliações
+Os seguintes gráficos são gerados automaticamente e salvos na pasta do modelo correspondente:
 
 1. **Acurácia e Perda**
    - Mostra o desempenho do modelo ao longo das épocas.
 
 2. **Matriz de Confusão**
-   - Avalia a performance de classificação entre classes.
+   - Avalia os acertos e erros do modelo por classe.
 
-3. **Acurácia por Classe**
-   - Permite verificar em quais classes o modelo tem melhor desempenho.
+3. **Relatório de Precisão, Recall e F1-Score**
+   - Permite entender a performance em métricas detalhadas por classe.
 
-4. **Predições**
-   - Exemplos de imagens corretamente e incorretamente classificadas.
+4. **Predições Corretas e Erradas**
+   - Exemplos visuais de imagens bem e mal classificadas pelo modelo.
 
-5. **Relatório de Métricas**
-   - Gráfico de precisão, recall e F1-Score por classe.
+### Modelos Treinados
+Os modelos treinados são salvos como arquivos `.h5` e podem ser reutilizados para inferência em novos dados.
+
+---
+
+## Como Personalizar
+
+- **Alteração de Hiperparâmetros**: Ajuste os parâmetros no notebook `treinar_extrair_dados.ipynb` para explorar diferentes configurações de treinamento.
+- **Testar Novos Modelos**: Use o `testar_modelo.ipynb` para carregar e testar modelos em dados de teste.
 
 ---
 
 ## Observações
 
-- **Armazenamento de Dados**: A pasta `data/` está no `.gitignore` e não será versionada.
-- **Personalização**: Ajuste os hiperparâmetros no notebook `treinar_extrair_dados.ipynb` para explorar diferentes arquiteturas e otimizadores.
+- **Armazenamento de Dados**: A pasta `data/` é ignorada no controle de versão para evitar problemas com arquivos grandes.
+- **Contribuições**: Caso queira contribuir, sinta-se à vontade para enviar pull requests ou reportar problemas.
