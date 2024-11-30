@@ -1,0 +1,12 @@
+Configurar:
+https://www.youtube.com/watch?v=NrJz3ACosJA
+
+Resnet50:
+https://www.tensorflow.org/api_docs/python/tf/keras/preprocessing/image/ImageDataGenerator
+https://medium.com/@kenneth.ca95/a-guide-to-transfer-learning-with-keras-using-resnet50-a81a4a28084b
+https://hamdi-ghorbel78.medium.com/a-guide-to-transfer-learning-with-keras-using-resnet50-453934a7b7dc
+https://keras.io/api/applications/resnet/
+
+MobileNetV2:
+https://keras.io/api/applications/mobilenet/
+https://www.kaggle.com/code/dcosmin/keras-mobilenetv2-starters-96-2-accuracy
